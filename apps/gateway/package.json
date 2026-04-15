@@ -1,0 +1,12 @@
+{
+  "name": "@globalreel/gateway",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'not yet implemented — see TODO.md'",
+    "build": "echo 'not yet implemented — see TODO.md'",
+    "lint": "echo 'not yet implemented — see TODO.md'",
+    "typecheck": "echo 'not yet implemented — see TODO.md'",
+    "test": "echo 'not yet implemented — see TODO.md'"
+  }
+}
