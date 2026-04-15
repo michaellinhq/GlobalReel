@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(pnpm:*)",
+      "Bash(tsx:*)",
+      "Bash(node:*)",
+      "Bash(python:*)",
+      "Bash(uv:*)",
+      "Bash(gh:*)",
+      "Bash(git:*)",
+      "Bash(docker:*)",
+      "Bash(docker-compose:*)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(wc:*)",
+      "Bash(echo:*)",
+      "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:pnpm.io)",
+      "WebFetch(domain:turbo.build)",
+      "WebFetch(domain:nextjs.org)",
+      "WebFetch(domain:nestjs.com)"
+    ],
+    "deny": [
+      "Bash(sudo:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node -e \"let d='';process.stdin.on('data',c=>d+=c);process.stdin.on('end',()=>{const i=JSON.parse(d);const c=i.tool_input?.content||'';const lines=c.split('\\n').length;if(lines>800){console.error('[Hook] BLOCKED: File exceeds 800 lines ('+lines+' lines). Split into smaller modules.');process.exit(2)}const secrets=[/AKIA[0-9A-Z]{16}/,/sk_live_[0-9a-zA-Z]{24,}/,/-----BEGIN (RSA |EC |OPENSSH )?PRIVATE KEY-----/,/ghp_[0-9a-zA-Z]{36,}/,/AUTH_TOKEN=\\\"?[A-Za-z0-9_-]{20,}/,/IMSI[:=][0-9]{14,15}/i];for(const r of secrets){if(r.test(c)){console.error('[Hook] BLOCKED: possible secret matched pattern '+r);process.exit(2)}}console.log(d)})\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'f=\"$CLAUDE_FILE_PATH\"; case \"$f\" in *.ts|*.tsx|*.js|*.jsx|*.json|*.md|*.yml|*.yaml) pnpm exec prettier --write \"$f\" 2>/dev/null || true ;; esac; case \"$f\" in apps/**/*.ts|apps/**/*.tsx|packages/**/*.ts) pnpm exec eslint --fix \"$f\" 2>/dev/null || true ;; esac; case \"$f\" in apps/automation/**/*.py|apps/bi-worker/**/*.py) cd \"$(git rev-parse --show-toplevel)\" && uv run ruff check --fix \"$f\" 2>/dev/null || true ;; esac; true'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'cd $(git rev-parse --show-toplevel) && if git diff --name-only HEAD~1 2>/dev/null | grep -qE \"^apps/(web|api)/\"; then pnpm -w build 2>&1 | tail -20; fi; true'"
+          }
+        ]
+      }
+    ]
+  }
+}
