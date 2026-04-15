@@ -1,3 +1,27 @@
 [# GlobalReel
 GlobalReel 不是一个简单的“视频翻译工具”，而是面向中国中腰部短剧出海团队的**“底层防封控分发网络 + AI 自动化管线 + 商业智能 (BI) 预测”**的 SaaS 基础设施。  解决的核心痛点：跨越内容出海的“物理墙”（海外上传防封控）、“信息墙”（海外爆款趋势盲区）与“语言/合规墙”（AI多模态重制与欧盟级合规审查）。  核心目标：构建高壁垒 B 端订阅制产品，利用极低的边际成本，支撑起年度 €50,000+ 的副业经常性收入 (MRR) 目标。
 ](https://gemini.google.com/app/7ad291d4c6121411?android-min-version=301356232&ios-min-version=322.0&is_sa=1&campaign_id=gemini_overview_page&utm_source=gemini&utm_medium=web&utm_campaign=microsite_gemini_about_page&pt=9008&mt=8&ct=gemini_overview_page&hl=de-DE&icid=microsite_gemini_about_page&_gl=1*yil5zr*_ga*NzM5MDM1NDk2LjE3NzYxNzE5NTE.*_ga_WC57KJ50ZZ*czE3NzYyMzY4OTkkbzMkZzAkdDE3NzYyMzY4OTkkajYwJGwwJGgw#:~:text=%E9%A1%B9%E7%9B%AE%E4%BB%A3%E5%8F%B7%EF%BC%9AGlobalReel%20(%E7%9F%AD,%E5%A4%96%E9%83%A8%E7%9F%AD%E5%89%A7%E5%B7%A5%E4%BD%9C%E5%AE%A4)
+
+---
+
+## Quickstart
+
+```bash
+# 1. Install tooling (one time)
+#    Node 22 via nvm / mise
+#    Python 3.12 via uv
+#    pnpm 9 via corepack
+
+corepack enable
+pnpm install
+pnpm run py:install
+
+# 2. Copy env template
+cp .env.example .env
+
+# 3. Run a dev surface
+pnpm --filter @globalreel/web dev
+```
+
+See `docs/architecture.md` for the three-tier layout and
+`CLAUDE.md` for the agent router and moat-specific rules.

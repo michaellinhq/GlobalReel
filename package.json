@@ -1,0 +1,27 @@
+{
+  "name": "globalreel",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@9.12.0",
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=9"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "format": "prettier --write \"**/*.{ts,tsx,js,json,md,yml,yaml}\"",
+    "compliance:scan": "echo 'compliance:scan not yet implemented — see apps/api/src/compliance/TODO.md'",
+    "device:status": "echo 'device:status not yet implemented — see apps/gateway/TODO.md'",
+    "bi:forecast": "echo 'bi:forecast not yet implemented — see apps/bi-worker/TODO.md'",
+    "py:install": "cd apps/automation && uv sync && cd ../bi-worker && uv sync"
+  },
+  "devDependencies": {
+    "turbo": "^2.3.0",
+    "prettier": "^3.4.0",
+    "typescript": "^5.6.0"
+  }
+}

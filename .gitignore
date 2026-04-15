@@ -1,0 +1,35 @@
+# Node
+node_modules/
+.pnpm-store/
+*.log
+.turbo/
+dist/
+build/
+.next/
+coverage/
+
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Env / secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/settings.json.example
+
+# Tool caches
+.uv/
+.python-version
